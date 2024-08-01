@@ -1,11 +1,15 @@
 <h1 align="center"> FelipedelosH </h1>
 <br>
-<h4>Name of project</h4>
+<h4>SpringBOOT Blank PROJECT</h4>
 
 ![Banner](Docs/banner.png)
-:construction: Status of project :construction:
+:construction: ALWAYS IN CONSTRUCTION :construction:
 <br><br>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+This project it´s create like a tool to undertang a concepts: 
+* Architecture.
+* Code.
+* UnitTEST
+* API RestFULL
 
 ## :hammer:Funtions:
 
@@ -18,12 +22,23 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 ## :play_or_pause_button:How to execute a project
 
-Double click
+In root folder compile with command "./gradlew build" and execute with command "java -jar .\build\libs\demo-0.0.1-SNAPSHOT.jar"
+
+## :play_or_pause_button:Execute unit test
+
+In root folder execute with the command "./gradlew test"
 
 ## :hammer_and_wrench:Tech.
 
-- code programing
-- framework
+- Java
+- Gradle
+- JPA
+- Jakarta
+- LOMBOK
+- CLEAN ARCHITECTURE/DDD
+- POSGRESQL 14
+- Junit
+- Mockito
 
 ## :warning:Warning.
 
