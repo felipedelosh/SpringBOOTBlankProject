@@ -21,6 +21,11 @@ This project it´s create like a tool to undertang a concepts:
 - `Function 4`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
 
 
+## Architecture
+
+![Architecture](Docs/ArquiteturaDetallada.png)
+<br>
+
 ## :play_or_pause_button:How to execute a project
 
 In root folder compile with command "./gradlew build" and execute with command "java -jar .\build\libs\demo-0.0.1-SNAPSHOT.jar"
