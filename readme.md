@@ -35,7 +35,11 @@ Based in Clean Arquitecture and DDD, two main layers ('domain', 'infraestructure
 
 ## :play_or_pause_button:How to execute a project
 
-In root folder compile with command "./gradlew build" and execute with command "java -jar .\build\libs\demo-0.0.1-SNAPSHOT.jar"
+Before you need install: java and posgresql 14 (The sql FILE in Docs/sql.sql)
+<br>
+In root folder compile with command "./gradlew build"
+<br>
+and execute with command "java -jar .\build\libs\demo-0.0.1-SNAPSHOT.jar"
 
 ## :play_or_pause_button:Execute unit test
 
@@ -48,10 +52,12 @@ In root folder execute with the command "./gradlew test"
 - JPA
 - Jakarta
 - LOMBOK
+- GCA
 - CLEAN ARCHITECTURE/DDD
 - POSGRESQL 14
 - Junit
 - Mockito
+- Python
 
 ## :warning:Warning.
 
