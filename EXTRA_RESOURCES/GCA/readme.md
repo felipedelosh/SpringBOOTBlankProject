@@ -19,7 +19,7 @@ This is a automate code generator for Java Spring boot. You need create a templa
 
 ## :play_or_pause_button:How to execute a project
 
-Charge you "classDiagram.drawio" in folder "input" execute with Double click in main.py all result files find in "output" folder.
+Charge you "classDiagram.drawio" in folder "input" (put the name of file in _PATH_DRAWIO_CLASES_FILE = "input/classDiagram.drawio" in main.py file) execute with Double click in main.py all result files find in "output" folder.
 
 ## :hammer_and_wrench:Tech.
 
