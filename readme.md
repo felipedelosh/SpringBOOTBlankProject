@@ -14,7 +14,7 @@ This project it´s create like a tool to undertang a concepts:
 
 ## :hammer:Funtions:
 
-- `Function 1`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
+- `Function 1`: Generate API endPoints example: http://localhost:8080/getAllExample<br>
 - `Function 2`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
 - `Function 3`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
 - `Function 3a`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
@@ -25,6 +25,13 @@ This project it´s create like a tool to undertang a concepts:
 
 ![Architecture](Docs/ArquiteturaDetallada.png)
 <br>
+Based in Clean Arquitecture and DDD, two main layers ('domain', 'infraestructure') with single responsability:
+
+1. DOMAIN.ENTITIES: Be a container to database tables with toString like a Json.
+2. DOMAIN.USECASES: Be a logic of bussiness.
+3. INFRAESTRUCTURE.ENTRYPOINTS: Be a API to conect user with system.
+4. INFRAESTRUCTURE.DAO: Be a Datababase conection for every entiy via JPA.
+5. INFRAESTRUCTURE.MAPPERS: Convert JPA entity to Domain Entity.
 
 ## :play_or_pause_button:How to execute a project
 
