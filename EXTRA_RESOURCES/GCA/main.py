@@ -126,16 +126,18 @@ def registerTypeOfSQLVars(type):
         return dic["String"]
 
 
+def createFolderEntity(entity):
+    try:
+        _statusFOLDERENTITY = os.path.exists(f"output/{entity}")
+        if not _statusFOLDERENTITY:
+            os.mkdir(f"output/{entity}")
+    except:
+        print(f"ERROR TO CREATE {entity} FOLDER")
+
+
 #SAVE FILES
 for i in _DATA:
-    # CREATE A FOLDERS FOR EVERY CLASS
-    try:
-        _statusFOLDERENTITY = os.path.exists(f"output/{i}")
-        if not _statusFOLDERENTITY:
-            os.mkdir(f"output/{i}")
-    except:
-        print(f"ERROR TO CREATE {i} FOLDER")
-
+    createFolderEntity(i)
     # CREATE API
     _APIClassName = f"get{i}ApiRest"
     _useCaseFolderName = f"getAll{i}UseCase"
