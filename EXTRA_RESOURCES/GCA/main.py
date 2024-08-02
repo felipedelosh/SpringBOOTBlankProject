@@ -17,6 +17,18 @@ Spring boot Code Generator:
 """
 import os
 import xml.etree.ElementTree as ET
+import datetime
+
+_LOGS_ = f"PYTHON:STARTED\n"
+def saveLOG(_type, date, hour, information):
+    global _LOGS_
+    _LOGS_ = _LOGS_ + _type + "|" + date + "|" + hour + "|" + information + "\n"
+
+def getDateYYYYMMDD():
+    return str(datetime.datetime.now().strftime("%Y-%m-%d"))
+
+def getHourHHMM():
+    return str(datetime.datetime.now().strftime("%H%M"))
 
 def loadFile(PATH):
     data = ""
@@ -29,10 +41,7 @@ def loadFile(PATH):
 
     return data
 
-
-
 _PATH_DRAWIO_CLASES_FILE = "input/class.drawio" # ruta de nuestro archivo de clases
-_LOGS_ = ""
 _template_sql = loadFile("templates/sql.txt")
 _template_api = loadFile("templates/getAllClassAPI.txt")
 _template_entity = loadFile("templates/ENTITY.txt")
@@ -44,10 +53,6 @@ _template_dao_service = loadFile("templates/DAOService.txt")
 _template_dao_entiry = loadFile("templates/DAOEntity.txt")
 tree = ET.parse(_PATH_DRAWIO_CLASES_FILE) # Usamos la libreria para construir el XML
 root = tree.getroot() # Inicializamos el xml
-
-
-def saveLOG(_type, date, hour, information):
-    pass
 
 
 def getAllClasesAttribs():
@@ -70,7 +75,7 @@ def getAllClasesAttribs():
                 else:
                     _data[_className].append(_value)
             except:
-                print("Error in value: ", _className, _value)
+                saveLOG("ERROR:FATAL", getDateYYYYMMDD(), getHourHHMM(), f"Error in value: {str(_className)} {str(_value)}")
 
 
     return _data
@@ -143,6 +148,7 @@ def registerTypeOfSQLVars(type):
     try:
         return dic[type]
     except:
+        saveLOG("ERROR:SQL:VAR", getDateYYYYMMDD(), getHourHHMM(), f"TRY TO SEARCH A {str(type)} in registerTypeOfSQLVars(type) AND NOT FOUND")
         return dic["String"]
     
 
@@ -570,8 +576,25 @@ for i in _DATA:
 
 
 
-
-
 # SAVE SQL FILE
 with open("output/sql.sql", "w", encoding="UTF-8") as f:
     f.write(formatDataToSQL())
+
+
+# SAVE LOGS
+_existsPreviuosLogFile = False
+try:
+    if os.path.isfile("log.log"):
+        _existsPreviuosLogFile = True
+except:
+    _existsPreviuosLogFile = False
+
+if _existsPreviuosLogFile:
+    previous_log_data = ""
+    with open("log.log", "r", encoding="UTF-8") as f:
+        previous_log_data = f.read()
+    _LOGS_ = previous_log_data + "\n" + _LOGS_
+
+
+with open("log.log", "w", encoding="UTF-8") as f:
+    f.write(_LOGS_)
