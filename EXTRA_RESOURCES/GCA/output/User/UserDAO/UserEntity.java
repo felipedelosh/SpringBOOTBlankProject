@@ -1,4 +1,4 @@
-package api.crazy.demo.infraestructure.DAO.<ENTITY>DAO;
+package api.crazy.demo.infraestructure.DAO.UserDAO;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -15,8 +15,24 @@ import lombok.Data;
 @NoArgsConstructor
 @Builder
 @Data
-public class <ENTITY>Entity {
+public class UserEntity {
 
-<VARS>
+	@Id
+	@Column(name = "id")
+	public String id;
+
+	@Column(name = "username")
+	public String username;
+
+	@Column(name = "contrasena")
+	public String contrasena;
+
+	@Column(name = "name")
+	public String name;
+
+	@Column(name = "age")
+	public int age;
+
+
 
 }

@@ -1,11 +1,19 @@
 """
-                                FelipedelosH
-                                    2024
+                                    FelipedelosH
+                                        2024
 
     :WARNING: DONT EXECUTE THIS SCRIPT IN SPRINGBOOT PROJECT ROOT :WARNING:
 
-SQL code generator
-Spring boot Code Generator
+SQL code generator:
+    sql.sql in output folder
+
+
+Spring boot Code Generator:
+    API (getAll)
+    USECASE (GetAllEntity)
+    ENTITIES
+    JPA-DAO
+    MAPPERS
 """
 import os
 import xml.etree.ElementTree as ET
@@ -33,6 +41,7 @@ _template_use_case_contract = loadFile("templates/getAllClassUseCase.txt")
 _template_use_case_implementation = loadFile("templates/getAllClassUseCaseIml.txt")
 _template_dao_repository = loadFile("templates/DAORepository.txt")
 _template_dao_service = loadFile("templates/DAOService.txt")
+_template_dao_entiry = loadFile("templates/DAOEntity.txt")
 tree = ET.parse(_PATH_DRAWIO_CLASES_FILE) # Usamos la libreria para construir el XML
 root = tree.getroot() # Inicializamos el xml
 
@@ -179,6 +188,59 @@ def getAllAttribsToJava(arrAttribs):
         attribs = attribs + f"\t{_encapsutlation} {_type} {_var};\n"
 
 
+    return attribs
+
+
+def getAllAttribsToJPA(arrAttribs):
+    """
+    Enter array str with information ["+-att:type;", "+-att:type;"... "+-att:type;"] 
+    and return JAVA  JPA VARS
+    examples:
+        + id:Strig;
+        + qty:Double;
+        + age:int; 
+
+            @Id
+            @Column(name = "id")
+            private String id;
+            
+            @Column(name = "qty")
+            private Double qty;
+    """
+    attribs = ""
+    for iterAttrins in arrAttribs:
+        _var_attrib = str(iterAttrins).replace(" ", "")
+
+        _encapsutlation = _var_attrib[0]
+
+        if _encapsutlation == "-":
+            _encapsutlation = "private"
+        else:
+            _encapsutlation = "public"
+
+        _var_attrib = str(_var_attrib).replace(" ", "")
+        _var_attrib = _var_attrib.replace("+", "")
+        _var_attrib = _var_attrib.replace("-", "")
+        _var_attrib = _var_attrib.replace(";", "")
+
+
+        _var = _var_attrib.split(":")[0]
+
+        # If is method abort
+        if "(" in _var and ")" in _var:
+            continue
+
+        _type = _var_attrib.split(":")[1]
+
+        if not isRegisterTypeOfJavaVars(_type):
+            continue
+
+        if _var == "id":
+            attribs = attribs +  f"\t@Id\n\t@Column(name = \"{_var}\")\n" + f"\t{_encapsutlation} {_type} {_var};\n\n"
+        else:
+            attribs = attribs +  f"\t@Column(name = \"{_var}\")\n" + f"\t{_encapsutlation} {_type} {_var};\n\n"
+
+        
     return attribs
 
 
@@ -411,6 +473,7 @@ for i in _DATA:
     _useCaseServiceVarName = _useCaseServiceName.lower()
     _daoRepositoryClassName = f"{i}Repository"
     _daoServiceClassName = f"{i}Service"
+    _daoEntityClassName = f"{i}Entity"
 
     # TEMPLATES.JAVA
     ENTITY = _template_entity[:]
@@ -495,6 +558,15 @@ for i in _DATA:
     with open(f"output/{i}/{i}DAO/{_daoServiceClassName}.java", "w", encoding="UTF-8") as f:
         f.write(DAO_SERVICE)
 
+
+    DAO_ENTITY = _template_dao_entiry[:]
+    DAO_ENTITY = DAO_ENTITY.replace('<ENTITY>', i)
+    _varsEntity = getAllAttribsToJPA(_DATA[i])
+    DAO_ENTITY = DAO_ENTITY.replace('<VARS>', _varsEntity)
+
+    #SAVE DAO Entity
+    with open(f"output/{i}/{i}DAO/{_daoEntityClassName}.java", "w", encoding="UTF-8") as f:
+        f.write(DAO_ENTITY)
 
 
 
