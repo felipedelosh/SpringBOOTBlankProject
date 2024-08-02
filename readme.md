@@ -30,7 +30,7 @@ Based in Clean Arquitecture and DDD, two main layers ('domain', 'infraestructure
 1. DOMAIN.ENTITIES: Be a container to database tables with toString like a Json.
 2. DOMAIN.USECASES: Be a logic of bussiness.
 3. INFRAESTRUCTURE.ENTRYPOINTS: Be a API to conect user with system.
-4. INFRAESTRUCTURE.DAO: Be a Datababase conection for every entiy via JPA.
+4. INFRAESTRUCTURE.DAO: Be a Datababase conection for every entity via JPA.
 5. INFRAESTRUCTURE.MAPPERS: Convert JPA entity to Domain Entity.
 
 ## :play_or_pause_button:How to execute a project
