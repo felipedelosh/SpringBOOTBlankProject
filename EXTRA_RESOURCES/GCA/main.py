@@ -26,6 +26,9 @@ def loadFile(PATH):
 _PATH_DRAWIO_CLASES_FILE = "input/class.drawio" # ruta de nuestro archivo de clases
 _template_sql = loadFile("templates/sql.txt")
 _template_api = loadFile("templates/getAllClassAPI.txt")
+_template_use_case_param = loadFile("templates/getAllClassUseCaseParam.txt")
+_template_use_case_contract = loadFile("templates/getAllClassUseCase.txt")
+_template_use_case_implementation = loadFile("templates/getAllClassUseCaseIml.txt")
 tree = ET.parse(_PATH_DRAWIO_CLASES_FILE) # Usamos la libreria para construir el XML
 root = tree.getroot() # Inicializamos el xml
 
@@ -152,7 +155,12 @@ for i in _DATA:
     _APIClassName = f"get{i}ApiRest"
     _useCaseFolderName = f"getAll{i}UseCase"
     _useCaseName = _useCaseFolderName[0].upper() + _useCaseFolderName[1:]
+    _useCaseParamName = f"GetAll{i}Param"
+    _useCaseContractName = f"GetAll{i}UseCase"
     _useCaseVarName = _useCaseName.lower()
+    _useCaseImplClassName = f"GetAll{i}UseCaseImpl"
+    _useCaseServiceName = f"{i}Service"
+    _useCaseServiceVarName = _useCaseServiceName.lower()
 
     _entity = i
 
@@ -164,9 +172,40 @@ for i in _DATA:
     API = API.replace('<USECASEPARAM>', _useCaseName+"Param")
     API = API.replace('<usecase>', _useCaseVarName)
 
-    #SAVE
+    #SAVE API
     with open(f"output/{i}/{_APIClassName}.java", "w", encoding="UTF-8") as f:
         f.write(API)
+
+
+    USE_CASE_PARAM = _template_use_case_param[:]
+    USE_CASE_PARAM = USE_CASE_PARAM.replace('<ENTITY>', i)
+    USE_CASE_PARAM = USE_CASE_PARAM.replace('<USECASEFOLDER>', _useCaseFolderName)
+
+    #SAVE USE CASE PARAM
+    with open(f"output/{i}/getAll{i}UseCase/{_useCaseParamName}.java", "w", encoding="UTF-8") as f:
+        f.write(USE_CASE_PARAM)
+
+
+    USE_CASE_CONTRACT = _template_use_case_contract[:]
+    USE_CASE_CONTRACT = USE_CASE_CONTRACT.replace('<ENTITY>', i)
+    USE_CASE_CONTRACT = USE_CASE_CONTRACT.replace('<USECASEFOLDER>', _useCaseFolderName)
+
+    #SAVE USE CASE CONTRACT
+    with open(f"output/{i}/getAll{i}UseCase/{_useCaseContractName}.java", "w", encoding="UTF-8") as f:
+        f.write(USE_CASE_CONTRACT)
+
+    USE_CASE = _template_use_case_implementation[:]
+    USE_CASE = USE_CASE.replace('<ENTITY>', i)
+    USE_CASE = USE_CASE.replace('<USECASEFOLDER>', _useCaseFolderName)
+    USE_CASE = USE_CASE.replace('<SERVICE>', _useCaseServiceName)
+    USE_CASE = USE_CASE.replace('<service>', _useCaseServiceVarName)
+
+
+    #SAVE USE CASE IMPL
+    with open(f"output/{i}/getAll{i}UseCase/{_useCaseImplClassName}.java", "w", encoding="UTF-8") as f:
+        f.write(USE_CASE)
+
+
 
 # SAVE SQL FILE
 with open("output/sql.sql", "w", encoding="UTF-8") as f:

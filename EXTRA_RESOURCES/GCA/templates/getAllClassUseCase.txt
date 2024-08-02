@@ -1,0 +1,10 @@
+package api.crazy.demo.domain.usecases.<USECASEFOLDER>;
+
+import java.util.List;
+import api.crazy.demo.domain.entities.<ENTITY>;
+
+public abstract class GetAll<ENTITY>UseCase {
+    
+    public abstract List<<ENTITY>> call(GetAll<ENTITY>Param param);
+
+}

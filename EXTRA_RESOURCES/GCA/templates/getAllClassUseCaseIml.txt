@@ -1,0 +1,35 @@
+package api.crazy.demo.domain.usecases.<USECASEFOLDER>;
+
+import java.util.List;
+import java.util.ArrayList;
+import org.springframework.stereotype.Component;
+
+import api.crazy.demo.domain.entities.<ENTITY>;
+import api.crazy.demo.infraestructure.DAO.<ENTITY>DAO.<ENTITY>Entity;
+import api.crazy.demo.infraestructure.DAO.<ENTITY>DAO.<ENTITY>Service;
+//Convert database info in Java Class
+import api.crazy.demo.infraestructure.mappers.<ENTITY>Mapper;
+
+@Component //This decorator permit injection
+public class GetAll<ENTITY>UseCaseImpl extends GetAll<ENTITY>UseCase {
+
+    private final <SERVICE> <service>;
+
+    public GetAllExamplesUseCaseImpl(<SERVICE> <service>){
+        this.<service> = <service>;
+    }
+
+    @Override
+    public List<<ENTITY>> call(GetAll<service>Param param) {
+
+        List<<ENTITY>> x = new ArrayList<>();
+        List<<ENTITYENTITY>> y = <service>.getAll();
+
+        for (int i = 0; i < y.size(); i++) {
+            x.add(<ENTITY>Mapper.toDomain(y.get(i)));
+        }
+
+        return x;
+    }
+
+}

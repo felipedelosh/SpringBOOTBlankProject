@@ -1,0 +1,17 @@
+src:
+--main\java\api\crazy\demo
+----domain
+------entities
+---------Example.java
+------usecases
+---------getAllExamplesUseCase
+------------GetAllExamplesParam.java
+------------GetAllExamplesUseCase.java
+------------GetAllExamplesUseCaseImpl.java
+----infraestructura
+------entryPoints
+---------getExamplesApiRest.java
+------DAO
+---------ExampleEntity.java
+---------ExampleRepository.java
+---------ExampleService.java
