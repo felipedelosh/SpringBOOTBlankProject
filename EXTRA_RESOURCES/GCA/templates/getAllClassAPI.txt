@@ -1,0 +1,28 @@
+package api.crazy.demo.infraestructure.entryPoints;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+//Dependencias para "Inyectar caso de uso"
+import api.crazy.demo.domain.usecases.<USECASEFOLDER>.<USECASE>;
+import api.crazy.demo.domain.usecases.<USECASEFOLDER>.<USECASEPARAM>;
+
+
+@RestController
+public class get<ENTITY>ApiRest {
+
+    private final <USECASE> <usecase>;
+
+    public getExamplesApiRest(<USECASE> <usecase>){
+        this.<usecase> = <usecase>;
+    }
+
+    @GetMapping("/getAll<ENTITY>")
+	public String index() {
+
+        var response = <usecase>.call(<USECASEPARAM>.build());
+
+		return response.toString();
+	}
+
+}

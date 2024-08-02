@@ -25,6 +25,7 @@ def loadFile(PATH):
 
 _PATH_DRAWIO_CLASES_FILE = "input/class.drawio" # ruta de nuestro archivo de clases
 _template_sql = loadFile("templates/sql.txt")
+_template_api = loadFile("templates/getAllClassAPI.txt")
 tree = ET.parse(_PATH_DRAWIO_CLASES_FILE) # Usamos la libreria para construir el XML
 root = tree.getroot() # Inicializamos el xml
 
@@ -129,19 +130,31 @@ def registerTypeOfSQLVars(type):
 for i in _DATA:
     # CREATE A FOLDERS FOR EVERY CLASS
     try:
-        _statusFOLDER = os.path.exists(f"output/{i}")
-        if not _statusFOLDER:
+        _statusFOLDERENTITY = os.path.exists(f"output/{i}")
+        if not _statusFOLDERENTITY:
             os.mkdir(f"output/{i}")
     except:
         print(f"ERROR TO CREATE {i} FOLDER")
 
-    # CREATE CONTROLLERS
-    
+    # CREATE API
+    _APIClassName = f"get{i}ApiRest"
+    _useCaseFolderName = f"getAll{i}UseCase"
+    _useCaseName = _useCaseFolderName[0].upper() + _useCaseFolderName[1:]
+    _useCaseVarName = _useCaseName.lower()
 
-    
-    
+    _entity = i
 
 
+    API = _template_api[:]
+    API = API.replace('<USECASEFOLDER>', _useCaseFolderName)
+    API = API.replace('<ENTITY>', _entity)
+    API = API.replace('<USECASE>', _useCaseName)
+    API = API.replace('<USECASEPARAM>', _useCaseName+"Param")
+    API = API.replace('<usecase>', _useCaseVarName)
+
+    #SAVE
+    with open(f"output/{i}/{_APIClassName}.java", "w", encoding="UTF-8") as f:
+        f.write(API)
 
 # SAVE SQL FILE
 with open("output/sql.sql", "w", encoding="UTF-8") as f:
