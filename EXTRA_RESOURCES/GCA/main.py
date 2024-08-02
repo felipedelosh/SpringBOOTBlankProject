@@ -2,11 +2,12 @@
                                 FelipedelosH
                                     2024
 
-    :WARNING: DONT EXECUTE THIS SCRIPT IN PROJECT ROOT :WARNING:
+    :WARNING: DONT EXECUTE THIS SCRIPT IN SPRINGBOOT PROJECT ROOT :WARNING:
 
 SQL code generator
 Spring boot Code Generator
 """
+import os
 import xml.etree.ElementTree as ET
 
 def loadFile(PATH):
@@ -123,6 +124,25 @@ def registerTypeOfSQLVars(type):
     except:
         return dic["String"]
 
-# save sql file
+
+#SAVE FILES
+for i in _DATA:
+    # CREATE A FOLDERS FOR EVERY CLASS
+    try:
+        _statusFOLDER = os.path.exists(f"output/{i}")
+        if not _statusFOLDER:
+            os.mkdir(f"output/{i}")
+    except:
+        print(f"ERROR TO CREATE {i} FOLDER")
+
+    # CREATE CONTROLLERS
+    
+
+    
+    
+
+
+
+# SAVE SQL FILE
 with open("output/sql.sql", "w", encoding="UTF-8") as f:
     f.write(formatDataToSQL())
