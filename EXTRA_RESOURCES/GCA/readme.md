@@ -31,6 +31,7 @@ Charge you "classDiagram.drawio" in folder "input" (put the name of file in _PAT
 
 ## :warning:Warning.
 
+- the software CAN'T put the name of sql tables (Not plural words hable).
 - if you try to use this script in another Spring boot project you need change the tenplates.
 
 ## Autor
