@@ -1,0 +1,19 @@
+package api.crazy.demo.infraestructure.DAO.<ENTITY>DAO;
+
+import java.util.List;
+import org.springframework.stereotype.Service;
+
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
+public class <ENTITY>Service {
+
+    private final <REPOSITORY> <repository>;
+
+    public List<<ENTITY>Entity> getAll(){
+        var x = <repository>.findAll();
+        return x;
+    }
+    
+}

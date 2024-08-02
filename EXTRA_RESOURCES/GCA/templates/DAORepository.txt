@@ -1,0 +1,16 @@
+package api.crazy.demo.infraestructure.DAO.<ENTITY>DAO;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+public interface <ENTITY>Repository extends JpaRepository<<ENTITY>Entity, <ID-TYPE>> {
+
+    @Query(
+            value = "select * from <TABLE-DB-ENTITY>",
+            nativeQuery = true
+    )
+    List<<ENTITY>Entity> getAll();
+    
+}

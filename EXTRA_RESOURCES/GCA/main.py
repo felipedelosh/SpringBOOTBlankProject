@@ -24,14 +24,21 @@ def loadFile(PATH):
 
 
 _PATH_DRAWIO_CLASES_FILE = "input/class.drawio" # ruta de nuestro archivo de clases
+_LOGS_ = ""
 _template_sql = loadFile("templates/sql.txt")
 _template_api = loadFile("templates/getAllClassAPI.txt")
 _template_entity = loadFile("templates/ENTITY.txt")
 _template_use_case_param = loadFile("templates/getAllClassUseCaseParam.txt")
 _template_use_case_contract = loadFile("templates/getAllClassUseCase.txt")
 _template_use_case_implementation = loadFile("templates/getAllClassUseCaseIml.txt")
+_template_dao_repository = loadFile("templates/DAORepository.txt")
+_template_dao_service = loadFile("templates/DAOService.txt")
 tree = ET.parse(_PATH_DRAWIO_CLASES_FILE) # Usamos la libreria para construir el XML
 root = tree.getroot() # Inicializamos el xml
+
+
+def saveLOG(_type, date, hour, information):
+    pass
 
 
 def getAllClasesAttribs():
@@ -323,6 +330,36 @@ def getJavaToString(vars):
     return to_string.replace("<JSON>", _visual_json)
 
 
+def getIDTypeToJava(vars):
+    """
+    Enter a str vars:
+        public String id;
+        public String username;
+        public int age;
+
+        retrun String
+    
+    """
+    data = ""
+
+    if "id" in vars:
+        for i in vars.split("\n"):
+            if str(i).strip() != "":
+                _itterVar = str(i)
+                _itterVar = str(_itterVar).replace("public", "")
+                _itterVar = _itterVar.replace("private", "")
+                _itterVar = _itterVar.replace(";", "")
+                _itterVar = _itterVar.lstrip()
+                _type = _itterVar.split(" ")[0]
+                _itterVar = _itterVar.split(" ")[-1]
+
+                if _itterVar == "id":
+                    if isRegisterTypeOfJavaVars(_type):
+                        return _type
+
+    return data
+
+
 
 def isRegisterTypeOfJavaVars(type):
     arr = ["String", "Double", "int"]
@@ -347,11 +384,22 @@ def createFolderGetAllEntityUseCase(entity):
         print(f"ERROR TO CREATE {i} FOLDER")
 
 
+def createFolderEntityDAO(entity):
+    try:
+        _statusFOLDERENTITY = os.path.exists(f"output/{entity}/{entity}DAO")
+        if not _statusFOLDERENTITY:
+            os.mkdir(f"output/{entity}/{entity}DAO")
+    except:
+        print(f"ERROR TO CREATE {entity} FOLDER")
+
+
 #SAVE FILES
 for i in _DATA:
     createFolderEntity(i)
     createFolderGetAllEntityUseCase(i)
-    # CREATE API
+    createFolderEntityDAO(i)
+    # Names of Class And Objects
+    _entity = i
     _APIClassName = f"get{i}ApiRest"
     _useCaseFolderName = f"getAll{i}UseCase"
     _useCaseName = _useCaseFolderName[0].upper() + _useCaseFolderName[1:]
@@ -361,9 +409,10 @@ for i in _DATA:
     _useCaseImplClassName = f"GetAll{i}UseCaseImpl"
     _useCaseServiceName = f"{i}Service"
     _useCaseServiceVarName = _useCaseServiceName.lower()
+    _daoRepositoryClassName = f"{i}Repository"
+    _daoServiceClassName = f"{i}Service"
 
-    _entity = i
-
+    # TEMPLATES.JAVA
     ENTITY = _template_entity[:]
     ENTITY = ENTITY.replace('<ENTITY>', _entity)
     _vars = getAllAttribsToJava(_DATA[i])
@@ -421,6 +470,33 @@ for i in _DATA:
     #SAVE USE CASE IMPL
     with open(f"output/{i}/getAll{i}UseCase/{_useCaseImplClassName}.java", "w", encoding="UTF-8") as f:
         f.write(USE_CASE)
+
+
+
+    DAO_REPOSITORY = _template_dao_repository[:]
+    DAO_REPOSITORY = DAO_REPOSITORY.replace('<ENTITY>', i)
+    _typeID = getIDTypeToJava(_vars)
+    DAO_REPOSITORY = DAO_REPOSITORY.replace('<ID-TYPE>', _typeID)
+
+
+    #SAVE DAO Repository
+    with open(f"output/{i}/{i}DAO/{_daoRepositoryClassName}.java", "w", encoding="UTF-8") as f:
+        f.write(DAO_REPOSITORY)
+
+
+    DAO_SERVICE = _template_dao_service[:]
+    DAO_SERVICE = DAO_SERVICE.replace('<ENTITY>', i)
+    DAO_SERVICE = DAO_SERVICE.replace('<REPOSITORY>', _daoRepositoryClassName)
+    _daoRepositoryVarName = _daoRepositoryClassName.lower()
+    DAO_SERVICE = DAO_SERVICE.replace('<repository>', _daoRepositoryVarName)
+
+
+    #SAVE DAO Service
+    with open(f"output/{i}/{i}DAO/{_daoServiceClassName}.java", "w", encoding="UTF-8") as f:
+        f.write(DAO_SERVICE)
+
+
+
 
 
 
