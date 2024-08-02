@@ -307,9 +307,9 @@ def getJavaToString(vars):
                 continue
 
             if _type == "int": 
-                _visual_json = _visual_json + "\t" + f"\"\\\"{_var}\\\":\" " + f" + {_var} + " + "\"\\\",\"" + " + \n"
+                _visual_json = _visual_json + "\t" + f"\t\t\"\\\"{_var}\\\":\" " + f" + {_var} + " + "\"\\\",\"" + " + \n"
             else:
-                _visual_json = _visual_json + "\t" + f"\"\\\"{_var}\\\": \\\"\"" + f" + {_var} + " + "\"\\\",\"" + " + \n"
+                _visual_json = _visual_json + "\t" + f"\t\t\"\\\"{_var}\\\": \\\"\"" + f" + {_var} + " + "\"\\\",\"" + " + \n"
 
     # The json Starts with {
     _visual_json = "\t\"{\" +\n"  + _visual_json
@@ -318,7 +318,7 @@ def getJavaToString(vars):
     #The last option dont end to pattern need to end }
     len_pattern = len(' + "\"," +\n')
     _visual_json = _visual_json[0:-len_pattern]
-    _visual_json = _visual_json + "\n\t\"}\""
+    _visual_json = _visual_json + "\n\t\t\"}\""
 
     return to_string.replace("<JSON>", _visual_json)
 

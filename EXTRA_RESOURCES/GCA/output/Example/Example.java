@@ -1,19 +1,17 @@
 package api.crazy.demo.domain.entities;
 
-public class Product {
+public class Example {
     
 	public String id;
 	public String name;
-	public Double price;
 
 
-	public Product(){
+	public Example(){
 	}
 
-	public Product(String id,String name,Double price){
+	public Example(String id,String name){
 		this.id = id;
 		this.name = name;
-		this.price = price;
 	}
 
 	public void setId(String id){
@@ -32,14 +30,6 @@ public class Product {
 		return this.name;
 	}
 
-	public void setPrice(Double price){
-		this.price = price;
-	}
-
-	public Double getPrice(Double price){
-		return this.price;
-	}
-
 
 
 
@@ -47,8 +37,7 @@ public class Product {
     public String toString() {
         return 	"{" +
 			"\"id\": \"" + id + "\"," + 
-			"\"name\": \"" + name + "\"," + 
-			"\"price\": \"" + price +
+			"\"name\": \"" + name +
 		"}";
     }
     

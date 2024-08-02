@@ -22,3 +22,9 @@ CREATE TABLE order (
 	status character varying(255)
 );
 
+DROP TABLE IF EXISTS example;
+CREATE TABLE example (
+	id character varying(255) PRIMARY KEY,
+	name character varying(255)
+);
+
