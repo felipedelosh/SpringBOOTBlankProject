@@ -440,7 +440,7 @@ def createFolderEntity(entity):
         if not _statusFOLDERENTITY:
             os.mkdir(f"output/{entity}")
     except:
-        print(f"ERROR TO CREATE {entity} FOLDER")
+        saveLOG("FOLDER-NOT-CREATE:ERROR", getDateYYYYMMDD(), getHourHHMM(), f"ERROR TO CREATE A FOLDER {entity}")
 
 
 def createFolderGetAllEntityUseCase(entity):
@@ -449,7 +449,7 @@ def createFolderGetAllEntityUseCase(entity):
         if not _statusFOLDERENTITY:
             os.mkdir(f"output/{entity}/getAll{entity}UseCase")
     except:
-        print(f"ERROR TO CREATE {i} FOLDER")
+        saveLOG("FOLDER-NOT-CREATE:ERROR", getDateYYYYMMDD(), getHourHHMM(), f"ERROR TO CREATE A FOLDER USECASE{entity}")
 
 
 def createFolderEntityDAO(entity):
@@ -458,7 +458,7 @@ def createFolderEntityDAO(entity):
         if not _statusFOLDERENTITY:
             os.mkdir(f"output/{entity}/{entity}DAO")
     except:
-        print(f"ERROR TO CREATE {entity} FOLDER")
+        saveLOG("FOLDER-NOT-CREATE:ERROR", getDateYYYYMMDD(), getHourHHMM(), f"ERROR TO CREATE A FOLDER DAO{entity}")
 
 
 #SAVE FILES
