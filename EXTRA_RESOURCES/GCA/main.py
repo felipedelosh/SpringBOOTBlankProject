@@ -135,9 +135,19 @@ def createFolderEntity(entity):
         print(f"ERROR TO CREATE {entity} FOLDER")
 
 
+def createFolderGetAllEntityUseCase(entity):
+    try:
+        _statusFOLDERENTITY = os.path.exists(f"output/{entity}/getAll{entity}UseCase")
+        if not _statusFOLDERENTITY:
+            os.mkdir(f"output/{entity}/getAll{entity}UseCase")
+    except:
+        print(f"ERROR TO CREATE {i} FOLDER")
+
+
 #SAVE FILES
 for i in _DATA:
     createFolderEntity(i)
+    createFolderGetAllEntityUseCase(i)
     # CREATE API
     _APIClassName = f"get{i}ApiRest"
     _useCaseFolderName = f"getAll{i}UseCase"
