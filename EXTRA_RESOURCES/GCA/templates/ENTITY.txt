@@ -1,0 +1,15 @@
+package api.crazy.demo.domain.entities;
+
+public class <ENTITY> {
+    
+<VARS>
+
+<EMPTY-CONSTRUCT>
+
+<FULL-CONSTRUCT>
+
+<SETTERS-GETTERS>
+
+<TO-STRING>
+
+}

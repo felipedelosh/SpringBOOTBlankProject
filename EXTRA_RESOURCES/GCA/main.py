@@ -26,6 +26,7 @@ def loadFile(PATH):
 _PATH_DRAWIO_CLASES_FILE = "input/class.drawio" # ruta de nuestro archivo de clases
 _template_sql = loadFile("templates/sql.txt")
 _template_api = loadFile("templates/getAllClassAPI.txt")
+_template_entity = loadFile("templates/ENTITY.txt")
 _template_use_case_param = loadFile("templates/getAllClassUseCaseParam.txt")
 _template_use_case_contract = loadFile("templates/getAllClassUseCase.txt")
 _template_use_case_implementation = loadFile("templates/getAllClassUseCaseIml.txt")
@@ -127,6 +128,205 @@ def registerTypeOfSQLVars(type):
         return dic[type]
     except:
         return dic["String"]
+    
+
+
+def getAllAttribsToJava(arrAttribs):
+    """
+    Enter array str with information ["+-att:type;", "+-att:type;"... "+-att:type;"] 
+    and return JAVA VARS
+    examples:
+        + id:Strig; = public String id;,
+        + qty:Double; = public Double qty;,
+        + age:int; = public String id;
+    """
+    attribs = ""
+
+    for iterAttrins in arrAttribs:
+        _var_attrib = str(iterAttrins).replace(" ", "")
+
+        _encapsutlation = _var_attrib[0]
+
+        if _encapsutlation == "-":
+            _encapsutlation = "private"
+        else:
+            _encapsutlation = "public"
+
+        _var_attrib = str(_var_attrib).replace(" ", "")
+        _var_attrib = _var_attrib.replace("+", "")
+        _var_attrib = _var_attrib.replace("-", "")
+        _var_attrib = _var_attrib.replace(";", "")
+
+
+        _var = _var_attrib.split(":")[0]
+
+        # If is method abort
+        if "(" in _var and ")" in _var:
+            continue
+
+        _type = _var_attrib.split(":")[1]
+
+        if not isRegisterTypeOfJavaVars(_type):
+            continue
+
+        attribs = attribs + f"\t{_encapsutlation} {_type} {_var};\n"
+
+
+    return attribs
+
+
+def getJavaConstructorWithVars(vars):
+    """
+    Enter a java vars:
+
+        public String id;
+        public String username;
+        public String contrasena;
+        public String name;
+        public int age;
+
+    and return constructor:
+            public User(String id,String username,String contrasena,String name,int age){
+                this.id = id;
+                this.username = username;
+                this.contrasena = contrasena;
+                this.name = name;
+                this.age = age;
+            }
+    """
+    _construct = _emptyConstruct = f"\tpublic {_entity}(<ARGS>){{\n<THIS.ARGS>\n\t}}"
+    
+    _setVars = [] # Catch all vars
+    for itterVar in vars.split("\n"):
+        if str(itterVar).strip() != "":
+            _var = str(itterVar).lstrip()
+            _var = _var.replace("public ", "")
+            _var = _var.replace("private ", "")
+            _var = _var.replace(";", "")
+            _setVars.append(_var)
+
+    # Args to enter in contruct
+    if len(_setVars) == 0:
+        _construct = _construct.replace("<ARGS>", "")
+        return _construct
+    else:
+        _args = ""
+        for i in _setVars:
+            _args = _args + i + ","
+        
+        _args = _args[:-1]
+        _construct = _construct.replace("<ARGS>", _args)
+
+        _thisargs = ""
+        for i in _setVars:
+            _nameVar = str(i).split(" ")[1]
+            _thisargs = _thisargs + f"\t\tthis.{_nameVar} = {_nameVar};\n"
+
+        _thisargs = _thisargs[:-1]
+
+        _construct = _construct.replace("<THIS.ARGS>", _thisargs)
+
+    return _construct
+
+
+def getJavaSetterAndGetters(vars):
+    """
+    Enter a java vars:
+        public String id;
+        public String username;
+
+    retrun getters and setters:
+
+        public String getId(){
+            return this.id;
+        }
+
+        public setId(String id){
+        ...
+    """
+    setters_getters = ""
+    _setVars = [] # Catch all vars
+    for itterVar in vars.split("\n"):
+        if str(itterVar).strip() != "":
+
+
+            _var = str(itterVar).replace("public", "")
+            _var = _var.replace("private", "")
+            _var = _var.replace(";", "")
+            _var = _var.lstrip()
+            _type =  _var.split(" ")[0]
+
+            if not isRegisterTypeOfJavaVars(_type):
+                continue
+
+            _var = _var.split(" ")[-1]
+
+            # If is method abort
+            if "(" in _var and ")" in _var:
+                continue
+
+            _newStters = f"\tpublic void set{_var[0].upper()+_var[1:]}({_type} {_var}){{\n\t\tthis.{_var} = {_var};\n\t}}\n"
+            setters_getters = setters_getters + _newStters + "\n"
+            _newGetter = f"\tpublic {_type} get{_var[0].upper()+_var[1:]}({_type} {_var}){{\n\t\treturn this.{_var};\n\t}}\n"
+            setters_getters = setters_getters + _newGetter + "\n"
+
+    return setters_getters
+
+
+def getJavaToString(vars):
+    """
+    Enter a java vars:
+        public String id;
+        public String username;
+
+        retrun toString java method
+    """
+    to_string = """
+    @Override
+    public String toString() {
+        return <JSON>;
+    }
+    """
+    _visual_json = ""
+    _setVars = [] # Catch all vars
+    for itterVar in vars.split("\n"):
+        if str(itterVar).strip() != "":
+            _var = str(itterVar).replace("public", "")
+            _var = _var.replace("private", "")
+            _var = _var.replace(";", "")
+            _var = _var.lstrip()
+            _type =  _var.split(" ")[0]
+
+            if not isRegisterTypeOfJavaVars(_type):
+                continue
+
+            _var = _var.split(" ")[-1]
+
+            # If is method abort
+            if "(" in _var and ")" in _var:
+                continue
+
+            if _type == "int": 
+                _visual_json = _visual_json + "\t" + f"\"\\\"{_var}\\\":\" " + f" + {_var} + " + "\"\\\",\"" + " + \n"
+            else:
+                _visual_json = _visual_json + "\t" + f"\"\\\"{_var}\\\": \\\"\"" + f" + {_var} + " + "\"\\\",\"" + " + \n"
+
+    # The json Starts with {
+    _visual_json = "\t\"{\" +\n"  + _visual_json
+    
+
+    #The last option dont end to pattern need to end }
+    len_pattern = len(' + "\"," +\n')
+    _visual_json = _visual_json[0:-len_pattern]
+    _visual_json = _visual_json + "\n\t\"}\""
+
+    return to_string.replace("<JSON>", _visual_json)
+
+
+
+def isRegisterTypeOfJavaVars(type):
+    arr = ["String", "Double", "int"]
+    return type in arr
 
 
 def createFolderEntity(entity):
@@ -163,6 +363,23 @@ for i in _DATA:
     _useCaseServiceVarName = _useCaseServiceName.lower()
 
     _entity = i
+
+    ENTITY = _template_entity[:]
+    ENTITY = ENTITY.replace('<ENTITY>', _entity)
+    _vars = getAllAttribsToJava(_DATA[i])
+    ENTITY = ENTITY.replace('<VARS>', _vars)
+    _emptyConstruct = f"\tpublic {_entity}(){{\n\t}}"
+    ENTITY = ENTITY.replace('<EMPTY-CONSTRUCT>', _emptyConstruct)
+    _FullConstruct =  getJavaConstructorWithVars(_vars)
+    ENTITY = ENTITY.replace('<FULL-CONSTRUCT>', _FullConstruct)
+    _setters_getters = getJavaSetterAndGetters(_vars)
+    ENTITY = ENTITY.replace('<SETTERS-GETTERS>', _setters_getters)
+    _to_string = getJavaToString(_vars)
+    ENTITY = ENTITY.replace('<TO-STRING>', _to_string)
+
+    #SAVE ENTITY
+    with open(f"output/{i}/{_entity}.java", "w", encoding="UTF-8") as f:
+        f.write(ENTITY)
 
 
     API = _template_api[:]
