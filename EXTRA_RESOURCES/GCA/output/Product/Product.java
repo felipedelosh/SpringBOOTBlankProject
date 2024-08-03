@@ -21,7 +21,7 @@ public class Product {
 		this.id = id;
 	}
 
-	public String getId(String id){
+	public String getId(){
 		return this.id;
 	}
 
@@ -29,7 +29,7 @@ public class Product {
 		this.name = name;
 	}
 
-	public String getName(String name){
+	public String getName(){
 		return this.name;
 	}
 
@@ -37,7 +37,7 @@ public class Product {
 		this.price = price;
 	}
 
-	public Double getPrice(Double price){
+	public Double getPrice(){
 		return this.price;
 	}
 

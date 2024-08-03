@@ -25,7 +25,7 @@ public class User {
 		this.id = id;
 	}
 
-	public String getId(String id){
+	public String getId(){
 		return this.id;
 	}
 
@@ -33,7 +33,7 @@ public class User {
 		this.username = username;
 	}
 
-	public String getUsername(String username){
+	public String getUsername(){
 		return this.username;
 	}
 
@@ -41,7 +41,7 @@ public class User {
 		this.contrasena = contrasena;
 	}
 
-	public String getContrasena(String contrasena){
+	public String getContrasena(){
 		return this.contrasena;
 	}
 
@@ -49,7 +49,7 @@ public class User {
 		this.name = name;
 	}
 
-	public String getName(String name){
+	public String getName(){
 		return this.name;
 	}
 
@@ -57,7 +57,7 @@ public class User {
 		this.age = age;
 	}
 
-	public int getAge(int age){
+	public int getAge(){
 		return this.age;
 	}
 

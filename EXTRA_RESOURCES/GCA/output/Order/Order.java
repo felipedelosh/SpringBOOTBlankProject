@@ -21,7 +21,7 @@ public class Order {
 		this.id = id;
 	}
 
-	public String getId(String id){
+	public String getId(){
 		return this.id;
 	}
 
@@ -29,7 +29,7 @@ public class Order {
 		this.userId = userId;
 	}
 
-	public String getUserId(String userId){
+	public String getUserId(){
 		return this.userId;
 	}
 
@@ -37,7 +37,7 @@ public class Order {
 		this.status = status;
 	}
 
-	public String getStatus(String status){
+	public String getStatus(){
 		return this.status;
 	}
 

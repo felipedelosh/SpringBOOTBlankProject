@@ -344,7 +344,7 @@ def getJavaSetterAndGetters(vars):
 
             _newStters = f"\tpublic void set{_var[0].upper()+_var[1:]}({_type} {_var}){{\n\t\tthis.{_var} = {_var};\n\t}}\n"
             setters_getters = setters_getters + _newStters + "\n"
-            _newGetter = f"\tpublic {_type} get{_var[0].upper()+_var[1:]}({_type} {_var}){{\n\t\treturn this.{_var};\n\t}}\n"
+            _newGetter = f"\tpublic {_type} get{_var[0].upper()+_var[1:]}(){{\n\t\treturn this.{_var};\n\t}}\n"
             setters_getters = setters_getters + _newGetter + "\n"
 
     return setters_getters

@@ -19,7 +19,7 @@ public class Example {
 		this.id = id;
 	}
 
-	public String getId(String id){
+	public String getId(){
 		return this.id;
 	}
 
@@ -27,7 +27,7 @@ public class Example {
 		this.name = name;
 	}
 
-	public String getName(String name){
+	public String getName(){
 		return this.name;
 	}
 
