@@ -6,6 +6,6 @@ import api.crazy.demo.domain.entities.User;
 
 public abstract class GetAllUserUseCase {
     
-    public abstract List<User> call(GetAllUserParam param);
+    public abstract List<User> call(GetAllUserUseCaseParam param);
 
 }

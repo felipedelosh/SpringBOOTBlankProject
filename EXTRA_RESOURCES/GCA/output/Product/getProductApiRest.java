@@ -14,7 +14,7 @@ public class getProductApiRest {
 
     private final GetAllProductUseCase getallproductusecase;
 
-    public getExamplesApiRest(GetAllProductUseCase getallproductusecase){
+    public getProductApiRest(GetAllProductUseCase getallproductusecase){
         this.getallproductusecase = getallproductusecase;
     }
 

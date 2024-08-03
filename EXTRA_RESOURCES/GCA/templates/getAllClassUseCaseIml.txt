@@ -16,15 +16,15 @@ public class GetAll<ENTITY>UseCaseImpl extends GetAll<ENTITY>UseCase {
 
     private final <SERVICE> <service>;
 
-    public GetAllExamplesUseCaseImpl(<SERVICE> <service>){
+    public GetAll<ENTITY>UseCaseImpl(<SERVICE> <service>){
         this.<service> = <service>;
     }
 
     @Override
-    public List<<ENTITY>> call(GetAll<service>Param param) {
+    public List<<ENTITY>> call(GetAll<ENTITY>UseCaseParam param) {
 
         List<<ENTITY>> x = new ArrayList<>();
-        List<<ENTITYENTITY>> y = <service>.getAll();
+        List<<ENTITY>Entity> y = <service>.getAll();
 
         for (int i = 0; i < y.size(); i++) {
             x.add(<ENTITY>Mapper.toDomain(y.get(i)));

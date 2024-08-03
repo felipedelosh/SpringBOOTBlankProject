@@ -16,15 +16,15 @@ public class GetAllExampleUseCaseImpl extends GetAllExampleUseCase {
 
     private final ExampleService exampleservice;
 
-    public GetAllExamplesUseCaseImpl(ExampleService exampleservice){
+    public GetAllExampleUseCaseImpl(ExampleService exampleservice){
         this.exampleservice = exampleservice;
     }
 
     @Override
-    public List<Example> call(GetAllexampleserviceParam param) {
+    public List<Example> call(GetAllExampleUseCaseParam param) {
 
         List<Example> x = new ArrayList<>();
-        List<<ENTITYENTITY>> y = exampleservice.getAll();
+        List<ExampleEntity> y = exampleservice.getAll();
 
         for (int i = 0; i < y.size(); i++) {
             x.add(ExampleMapper.toDomain(y.get(i)));

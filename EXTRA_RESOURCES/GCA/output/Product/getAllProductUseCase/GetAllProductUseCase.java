@@ -6,6 +6,6 @@ import api.crazy.demo.domain.entities.Product;
 
 public abstract class GetAllProductUseCase {
     
-    public abstract List<Product> call(GetAllProductParam param);
+    public abstract List<Product> call(GetAllProductUseCaseParam param);
 
 }

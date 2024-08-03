@@ -14,7 +14,7 @@ public class getUserApiRest {
 
     private final GetAllUserUseCase getalluserusecase;
 
-    public getExamplesApiRest(GetAllUserUseCase getalluserusecase){
+    public getUserApiRest(GetAllUserUseCase getalluserusecase){
         this.getalluserusecase = getalluserusecase;
     }
 

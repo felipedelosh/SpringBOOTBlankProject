@@ -572,7 +572,7 @@ for i in _DATA:
     _APIClassName = f"get{i}ApiRest"
     _useCaseFolderName = f"getAll{i}UseCase"
     _useCaseName = _useCaseFolderName[0].upper() + _useCaseFolderName[1:]
-    _useCaseParamName = f"GetAll{i}Param"
+    _useCaseParamName = f"GetAll{i}UseCaseParam"
     _useCaseContractName = f"GetAll{i}UseCase"
     _useCaseVarName = _useCaseName.lower()
     _useCaseImplClassName = f"GetAll{i}UseCaseImpl"
@@ -607,7 +607,7 @@ for i in _DATA:
     API = API.replace('<USECASEFOLDER>', _useCaseFolderName)
     API = API.replace('<ENTITY>', _entity)
     API = API.replace('<USECASE>', _useCaseName)
-    API = API.replace('<USECASEPARAM>', _useCaseName+"Param")
+    API = API.replace('<USECASEPARAM>', _useCaseParamName)
     API = API.replace('<usecase>', _useCaseVarName)
 
     #SAVE API

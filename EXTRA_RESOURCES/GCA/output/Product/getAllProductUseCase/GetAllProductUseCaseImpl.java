@@ -16,15 +16,15 @@ public class GetAllProductUseCaseImpl extends GetAllProductUseCase {
 
     private final ProductService productservice;
 
-    public GetAllExamplesUseCaseImpl(ProductService productservice){
+    public GetAllProductUseCaseImpl(ProductService productservice){
         this.productservice = productservice;
     }
 
     @Override
-    public List<Product> call(GetAllproductserviceParam param) {
+    public List<Product> call(GetAllProductUseCaseParam param) {
 
         List<Product> x = new ArrayList<>();
-        List<<ENTITYENTITY>> y = productservice.getAll();
+        List<ProductEntity> y = productservice.getAll();
 
         for (int i = 0; i < y.size(); i++) {
             x.add(ProductMapper.toDomain(y.get(i)));

@@ -6,6 +6,6 @@ import api.crazy.demo.domain.entities.TestTwoVarInt;
 
 public abstract class GetAllTestTwoVarIntUseCase {
     
-    public abstract List<TestTwoVarInt> call(GetAllTestTwoVarIntParam param);
+    public abstract List<TestTwoVarInt> call(GetAllTestTwoVarIntUseCaseParam param);
 
 }

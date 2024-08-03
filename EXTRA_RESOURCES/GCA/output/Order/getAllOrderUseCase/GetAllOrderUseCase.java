@@ -6,6 +6,6 @@ import api.crazy.demo.domain.entities.Order;
 
 public abstract class GetAllOrderUseCase {
     
-    public abstract List<Order> call(GetAllOrderParam param);
+    public abstract List<Order> call(GetAllOrderUseCaseParam param);
 
 }

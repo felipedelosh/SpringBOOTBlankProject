@@ -16,15 +16,15 @@ public class GetAllTestTwoVarIntUseCaseImpl extends GetAllTestTwoVarIntUseCase {
 
     private final TestTwoVarIntService testtwovarintservice;
 
-    public GetAllExamplesUseCaseImpl(TestTwoVarIntService testtwovarintservice){
+    public GetAllTestTwoVarIntUseCaseImpl(TestTwoVarIntService testtwovarintservice){
         this.testtwovarintservice = testtwovarintservice;
     }
 
     @Override
-    public List<TestTwoVarInt> call(GetAlltesttwovarintserviceParam param) {
+    public List<TestTwoVarInt> call(GetAllTestTwoVarIntUseCaseParam param) {
 
         List<TestTwoVarInt> x = new ArrayList<>();
-        List<<ENTITYENTITY>> y = testtwovarintservice.getAll();
+        List<TestTwoVarIntEntity> y = testtwovarintservice.getAll();
 
         for (int i = 0; i < y.size(); i++) {
             x.add(TestTwoVarIntMapper.toDomain(y.get(i)));

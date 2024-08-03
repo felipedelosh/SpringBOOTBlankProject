@@ -14,7 +14,7 @@ public class getOrderApiRest {
 
     private final GetAllOrderUseCase getallorderusecase;
 
-    public getExamplesApiRest(GetAllOrderUseCase getallorderusecase){
+    public getOrderApiRest(GetAllOrderUseCase getallorderusecase){
         this.getallorderusecase = getallorderusecase;
     }
 

@@ -14,7 +14,7 @@ public class get<ENTITY>ApiRest {
 
     private final <USECASE> <usecase>;
 
-    public getExamplesApiRest(<USECASE> <usecase>){
+    public get<ENTITY>ApiRest(<USECASE> <usecase>){
         this.<usecase> = <usecase>;
     }
 

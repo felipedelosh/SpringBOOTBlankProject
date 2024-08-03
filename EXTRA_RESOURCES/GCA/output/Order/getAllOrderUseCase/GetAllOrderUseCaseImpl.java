@@ -16,15 +16,15 @@ public class GetAllOrderUseCaseImpl extends GetAllOrderUseCase {
 
     private final OrderService orderservice;
 
-    public GetAllExamplesUseCaseImpl(OrderService orderservice){
+    public GetAllOrderUseCaseImpl(OrderService orderservice){
         this.orderservice = orderservice;
     }
 
     @Override
-    public List<Order> call(GetAllorderserviceParam param) {
+    public List<Order> call(GetAllOrderUseCaseParam param) {
 
         List<Order> x = new ArrayList<>();
-        List<<ENTITYENTITY>> y = orderservice.getAll();
+        List<OrderEntity> y = orderservice.getAll();
 
         for (int i = 0; i < y.size(); i++) {
             x.add(OrderMapper.toDomain(y.get(i)));

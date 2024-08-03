@@ -14,7 +14,7 @@ public class getTestOneVarIntApiRest {
 
     private final GetAllTestOneVarIntUseCase getalltestonevarintusecase;
 
-    public getExamplesApiRest(GetAllTestOneVarIntUseCase getalltestonevarintusecase){
+    public getTestOneVarIntApiRest(GetAllTestOneVarIntUseCase getalltestonevarintusecase){
         this.getalltestonevarintusecase = getalltestonevarintusecase;
     }
 
