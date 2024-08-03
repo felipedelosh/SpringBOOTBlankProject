@@ -395,7 +395,13 @@ def getJavaToString(vars):
     #The last option dont end to pattern need to end }
     len_pattern = len(' + "\"," +\n')
     _visual_json = _visual_json[0:-len_pattern]
-    _visual_json = _visual_json + "\n\t\t\"}\""
+
+
+    # Number or Str
+    if _type == "int":
+        _visual_json = _visual_json + "\n\t\t\"}\""
+    else:
+        _visual_json = _visual_json + " \"\\\"\" + " + "\n\t\t\"}\""
 
     return to_string.replace("<JSON>", _visual_json)
 

@@ -49,7 +49,7 @@ public class Product {
         return 	"{" +
 			"\"id\": \"" + id + "\"," + 
 			"\"name\": \"" + name + "\"," + 
-			"\"price\": \"" + price +
+			"\"price\": \"" + price + "\"" + 
 		"}";
     }
     

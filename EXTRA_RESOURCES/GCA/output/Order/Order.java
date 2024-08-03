@@ -49,7 +49,7 @@ public class Order {
         return 	"{" +
 			"\"id\": \"" + id + "\"," + 
 			"\"userId\": \"" + userId + "\"," + 
-			"\"status\": \"" + status +
+			"\"status\": \"" + status + "\"" + 
 		"}";
     }
     

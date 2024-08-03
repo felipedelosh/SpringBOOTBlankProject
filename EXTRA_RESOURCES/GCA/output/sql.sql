@@ -28,3 +28,14 @@ CREATE TABLE example (
 	name character varying(255)
 );
 
+DROP TABLE IF EXISTS testonevarint;
+CREATE TABLE testonevarint (
+		numero integer
+);
+
+DROP TABLE IF EXISTS testtwovarint;
+CREATE TABLE testtwovarint (
+	id character varying(255) PRIMARY KEY,
+	numero integer
+);
+
