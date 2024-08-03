@@ -143,7 +143,8 @@ def registerTypeOfSQLVars(type):
     dic = {
         "String" : "character varying(255)",
         "Double" : "DOUBLE PRECISION",
-        "int" : "integer"
+        "int" : "integer",
+        "List<String>" : "String"
     }
 
     try:
@@ -593,6 +594,7 @@ for i in _DATA:
     #SAVE ENTITY
     with open(f"output/{i}/{_entity}.java", "w", encoding="UTF-8") as f:
         f.write(ENTITY)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_entity}.java FILE")
 
 
     API = _template_api[:]
@@ -605,6 +607,7 @@ for i in _DATA:
     #SAVE API
     with open(f"output/{i}/{_APIClassName}.java", "w", encoding="UTF-8") as f:
         f.write(API)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_APIClassName}.java FILE")
 
 
     USE_CASE_PARAM = _template_use_case_param[:]
@@ -614,6 +617,7 @@ for i in _DATA:
     #SAVE USE CASE PARAM
     with open(f"output/{i}/getAll{i}UseCase/{_useCaseParamName}.java", "w", encoding="UTF-8") as f:
         f.write(USE_CASE_PARAM)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_useCaseParamName}.java FILE")
 
 
     USE_CASE_CONTRACT = _template_use_case_contract[:]
@@ -623,6 +627,7 @@ for i in _DATA:
     #SAVE USE CASE CONTRACT
     with open(f"output/{i}/getAll{i}UseCase/{_useCaseContractName}.java", "w", encoding="UTF-8") as f:
         f.write(USE_CASE_CONTRACT)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_useCaseContractName}.java FILE")
 
     USE_CASE = _template_use_case_implementation[:]
     USE_CASE = USE_CASE.replace('<ENTITY>', i)
@@ -634,6 +639,7 @@ for i in _DATA:
     #SAVE USE CASE IMPL
     with open(f"output/{i}/getAll{i}UseCase/{_useCaseImplClassName}.java", "w", encoding="UTF-8") as f:
         f.write(USE_CASE)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_useCaseImplClassName}.java FILE")
 
 
 
@@ -646,6 +652,7 @@ for i in _DATA:
     #SAVE DAO Repository
     with open(f"output/{i}/{i}DAO/{_daoRepositoryClassName}.java", "w", encoding="UTF-8") as f:
         f.write(DAO_REPOSITORY)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_daoRepositoryClassName}.java FILE")
 
 
     DAO_SERVICE = _template_dao_service[:]
@@ -658,6 +665,7 @@ for i in _DATA:
     #SAVE DAO Service
     with open(f"output/{i}/{i}DAO/{_daoServiceClassName}.java", "w", encoding="UTF-8") as f:
         f.write(DAO_SERVICE)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_daoServiceClassName}.java FILE")
 
 
     DAO_ENTITY = _template_dao_entiry[:]
@@ -668,6 +676,7 @@ for i in _DATA:
     #SAVE DAO Entity
     with open(f"output/{i}/{i}DAO/{_daoEntityClassName}.java", "w", encoding="UTF-8") as f:
         f.write(DAO_ENTITY)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_daoEntityClassName}.java FILE")
 
 
     MAPPER_ENTITY = _template_mapper_entiry[:]
@@ -680,11 +689,13 @@ for i in _DATA:
     #SAVE MAPPER
     with open(f"output/{i}/{_mapperClassName}.java", "w", encoding="UTF-8") as f:
         f.write(MAPPER_ENTITY)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_mapperClassName}.java FILE")
 
 
 # SAVE SQL FILE
 with open("output/sql.sql", "w", encoding="UTF-8") as f:
     f.write(formatDataToSQL())
+    saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A sql.sql FILE")
 
 
 # SAVE LOGS

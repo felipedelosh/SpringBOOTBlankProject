@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS order;
 CREATE TABLE order (
 	id character varying(255) PRIMARY KEY,
 	userId character varying(255),
-	productIds character varying(255),
+	productIds String,
 	status character varying(255)
 );
 
