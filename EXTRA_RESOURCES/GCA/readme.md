@@ -13,8 +13,9 @@ This is a automate code generator for Java Spring boot. You need create a templa
 - `Function 1`: Load a Class Diagram with extension .drawio<br>
 - `Function 2`: Make a AUTOMATIC .sql query to insert all tables to class diagram<br>
 - `Function 3`: Make a AUTOMATIC Entity.java FILE WITH(Constructs, Getters&Setters and toJson) for every entity in class Diagram<br>
-- `Function 3a`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
-- `Function 4`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
+- `Function 4`: Make a AUTOMATIC APIRest.java FILE to get all same entities from use case fro every class in diagram<br>
+- `Function 5`: Make a AUTOMATIC DAO pattern in java to acces DB for every entity in class diagram<br>
+- `Function 5`: Make a AUTOMATIC Mapper to conver DAO entity to Domain Entity<br>
 
 
 ## :play_or_pause_button:How to execute a project

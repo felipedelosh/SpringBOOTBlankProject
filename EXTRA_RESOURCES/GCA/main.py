@@ -51,6 +51,7 @@ _template_use_case_implementation = loadFile("templates/getAllClassUseCaseIml.tx
 _template_dao_repository = loadFile("templates/DAORepository.txt")
 _template_dao_service = loadFile("templates/DAOService.txt")
 _template_dao_entiry = loadFile("templates/DAOEntity.txt")
+_template_mapper_entiry = loadFile("templates/MapperEntity.txt")
 tree = ET.parse(_PATH_DRAWIO_CLASES_FILE) # Usamos la libreria para construir el XML
 root = tree.getroot() # Inicializamos el xml
 
@@ -434,6 +435,99 @@ def isRegisterTypeOfJavaVars(type):
     return type in arr
 
 
+def getJavaMapperToJPAEntity(entity, vars):
+    """
+    Enter a str vars and entity className:
+        public String id;
+        public String username;
+        public int age;
+
+        retrun
+
+            public static XYZEntity toEntity(XYZ xyz) {
+                return new XYZEntity(xyz.getId(), xyz.getUsername(), xyz.getAge());
+            }
+    """
+    _toEntity = """
+    public static <ENTITY>Entity toEntity(<ENTITY> <entity>) {
+        return new <ENTITY>Entity(<GET-VARS>);
+    }
+    """
+
+    _setVars = [] # Catch all vars
+    for itterVar in vars.split("\n"):
+        if str(itterVar).strip() != "":
+            _var = str(itterVar).lstrip()
+            _var = _var.replace("public ", "")
+            _var = _var.replace("private ", "")
+            _var = _var.replace(";", "")
+            _var = _var.split(" ")[-1]
+            _setVars.append(_var)
+
+    _toEntity = _toEntity.replace("<ENTITY>", entity)
+    _toEntity = _toEntity.replace("<entity>", entity.lower())
+
+    final_get_vars = ""
+    for i in _setVars:
+        _getVar = f"get{str(i)[0].upper() +str(i)[1:]}()"
+        final_get_vars = final_get_vars + f"{entity.lower()}." + _getVar + ","
+
+
+    # Erase last comma
+    final_get_vars = final_get_vars[:-1]
+   
+    _toEntity = _toEntity.replace("<GET-VARS>", final_get_vars)
+
+
+    return _toEntity
+
+
+def getJavaMapperToDomainEntity(entity, vars):
+    """
+    Enter a str vars and entity className:
+        public String id;
+        public String username;
+        public int age;
+
+        retrun
+
+            public static  XYZ toDomain(XYZEntity xyz) {
+                return new XYZ(xyz.getId(), xyz.getUsername(), xyz.getAge());
+            }
+    """
+    _toEntity = """
+    public static <ENTITY> toDomain(<ENTITY>Entity <entity>) {
+        return new <ENTITY>(<GET-VARS>);
+    }
+    """
+
+    _setVars = [] # Catch all vars
+    for itterVar in vars.split("\n"):
+        if str(itterVar).strip() != "":
+            _var = str(itterVar).lstrip()
+            _var = _var.replace("public ", "")
+            _var = _var.replace("private ", "")
+            _var = _var.replace(";", "")
+            _var = _var.split(" ")[-1]
+            _setVars.append(_var)
+
+    _toEntity = _toEntity.replace("<ENTITY>", entity)
+    _toEntity = _toEntity.replace("<entity>", entity.lower())
+
+    final_get_vars = ""
+    for i in _setVars:
+        _getVar = f"get{str(i)[0].upper() +str(i)[1:]}()"
+        final_get_vars = final_get_vars + f"{entity.lower()}." + _getVar + ","
+
+
+    # Erase last comma
+    final_get_vars = final_get_vars[:-1]
+   
+    _toEntity = _toEntity.replace("<GET-VARS>", final_get_vars)
+
+
+    return _toEntity
+
 def createFolderEntity(entity):
     try:
         _statusFOLDERENTITY = os.path.exists(f"output/{entity}")
@@ -480,6 +574,7 @@ for i in _DATA:
     _daoRepositoryClassName = f"{i}Repository"
     _daoServiceClassName = f"{i}Service"
     _daoEntityClassName = f"{i}Entity"
+    _mapperClassName = f"{i}Mapper"
 
     # TEMPLATES.JAVA
     ENTITY = _template_entity[:]
@@ -574,6 +669,17 @@ for i in _DATA:
     with open(f"output/{i}/{i}DAO/{_daoEntityClassName}.java", "w", encoding="UTF-8") as f:
         f.write(DAO_ENTITY)
 
+
+    MAPPER_ENTITY = _template_mapper_entiry[:]
+    MAPPER_ENTITY = MAPPER_ENTITY.replace('<ENTITY>', i)
+    _toJPAEntity = getJavaMapperToJPAEntity(i, _vars)
+    MAPPER_ENTITY = MAPPER_ENTITY.replace('<TO-JPA-ENTITY>', _toJPAEntity)
+    _toDomainEntity = getJavaMapperToDomainEntity(i, _vars)
+    MAPPER_ENTITY = MAPPER_ENTITY.replace('<TO-DOAMIN-ENTITY>', _toDomainEntity)
+
+    #SAVE MAPPER
+    with open(f"output/{i}/{_mapperClassName}.java", "w", encoding="UTF-8") as f:
+        f.write(MAPPER_ENTITY)
 
 
 # SAVE SQL FILE
