@@ -717,8 +717,28 @@ def createJavaFILE_DAO_ENTITY(DAO_class_name, e_name, DAO_e_vars):
         saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {DAO_class_name}.java FILE")
 
 
+def createJavaFILE_MAPPER(mapperClassName, e_name, e_vars):
+    """
+    Enter:
+        name of class mapper, name of entity and list of vars
+    Creates:
+        EntityMapper.java
+    """
+    MAPPER_ENTITY = _template_mapper_entiry[:]
+    MAPPER_ENTITY = MAPPER_ENTITY.replace('<ENTITY>', e_name)
+    _toJPAEntity = getJavaMapperToJPAEntity(e_name, e_vars)
+    MAPPER_ENTITY = MAPPER_ENTITY.replace('<TO-JPA-ENTITY>', _toJPAEntity)
+    _toDomainEntity = getJavaMapperToDomainEntity(e_name, e_vars)
+    MAPPER_ENTITY = MAPPER_ENTITY.replace('<TO-DOAMIN-ENTITY>', _toDomainEntity)
+
+    #SAVE MAPPER
+    with open(f"output/{e_name}/{mapperClassName}.java", "w", encoding="UTF-8") as f:
+        f.write(MAPPER_ENTITY)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {mapperClassName}.java FILE")
+
+
 #SAVE FILES
-for i in _DATA:
+for i in _DATA: 
     createFolderEntity(i)
     createFolderGetAllEntityUseCase(i)
     createFolderEntityDAO(i)
@@ -748,22 +768,8 @@ for i in _DATA:
     createJavaFILE_DAO_REPOSITORY(_entity, _vars, _daoRepositoryClassName)
     createJavaFILE_DAO_SERVICE(_entity, _daoServiceClassName, _daoRepositoryClassName)
     createJavaFILE_DAO_ENTITY(_daoEntityClassName, _entity, _varsEntity)
-
-    # ... Refactoring
-
-
-
-    MAPPER_ENTITY = _template_mapper_entiry[:]
-    MAPPER_ENTITY = MAPPER_ENTITY.replace('<ENTITY>', i)
-    _toJPAEntity = getJavaMapperToJPAEntity(i, _vars)
-    MAPPER_ENTITY = MAPPER_ENTITY.replace('<TO-JPA-ENTITY>', _toJPAEntity)
-    _toDomainEntity = getJavaMapperToDomainEntity(i, _vars)
-    MAPPER_ENTITY = MAPPER_ENTITY.replace('<TO-DOAMIN-ENTITY>', _toDomainEntity)
-
-    #SAVE MAPPER
-    with open(f"output/{i}/{_mapperClassName}.java", "w", encoding="UTF-8") as f:
-        f.write(MAPPER_ENTITY)
-        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_mapperClassName}.java FILE")
+    createJavaFILE_MAPPER(_mapperClassName, _entity, _vars)
+    # END FOR
 
 
 # SAVE SQL FILE
@@ -785,7 +791,6 @@ if _existsPreviuosLogFile:
     with open("log.log", "r", encoding="UTF-8") as f:
         previous_log_data = f.read()
     _LOGS_ = previous_log_data + "\n" + _LOGS_
-
 
 with open("log.log", "w", encoding="UTF-8") as f:
     f.write(_LOGS_)
