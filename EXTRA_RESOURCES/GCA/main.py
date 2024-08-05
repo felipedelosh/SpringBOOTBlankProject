@@ -585,6 +585,25 @@ def createJavaFILE_ENTITY(e_name, e_vars):
         saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {e_name}.java FILE")
 
 
+
+def createJavaFILE_API(e_name, useCaseFolderName, useCaseClassName, useCaseVarName, useCaseParamClassName):
+    """
+    """
+    _APIClassName = f"get{e_name}ApiRest"
+    API = _template_api[:]
+    API = API.replace('<ENTITY>', e_name)
+    API = API.replace('<USECASEFOLDER>', useCaseFolderName)
+    API = API.replace('<USECASE>', useCaseClassName)
+    API = API.replace('<usecase>', useCaseVarName)
+    API = API.replace('<USECASEPARAM>', useCaseParamClassName)
+    
+
+    #SAVE API
+    with open(f"output/{e_name}/{_APIClassName}.java", "w", encoding="UTF-8") as f:
+        f.write(API)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_APIClassName}.java FILE")
+
+
 #SAVE FILES
 for i in _DATA:
     createFolderEntity(i)
@@ -592,7 +611,6 @@ for i in _DATA:
     createFolderEntityDAO(i)
     # Names of Class And Objects
     _entity = i
-    _APIClassName = f"get{i}ApiRest"
     _useCaseFolderName = f"getAll{i}UseCase"
     _useCaseName = _useCaseFolderName[0].upper() + _useCaseFolderName[1:]
     _useCaseParamName = f"GetAll{i}UseCaseParam"
@@ -609,19 +627,9 @@ for i in _DATA:
 
     # TEMPLATES.JAVA
     createJavaFILE_ENTITY(_entity, _vars)
+    createJavaFILE_API(_entity, _useCaseFolderName, _useCaseName, _useCaseVarName, _useCaseParamName)
 
 
-    API = _template_api[:]
-    API = API.replace('<USECASEFOLDER>', _useCaseFolderName)
-    API = API.replace('<ENTITY>', _entity)
-    API = API.replace('<USECASE>', _useCaseName)
-    API = API.replace('<USECASEPARAM>', _useCaseParamName)
-    API = API.replace('<usecase>', _useCaseVarName)
-
-    #SAVE API
-    with open(f"output/{i}/{_APIClassName}.java", "w", encoding="UTF-8") as f:
-        f.write(API)
-        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_APIClassName}.java FILE")
 
 
     USE_CASE_PARAM = _template_use_case_param[:]
