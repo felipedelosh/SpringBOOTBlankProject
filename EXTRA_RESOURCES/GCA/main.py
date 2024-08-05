@@ -160,8 +160,8 @@ def getAllAttribsToJava(arrAttribs):
     Enter array str with information ["+-att:type;", "+-att:type;"... "+-att:type;"] 
     and return JAVA VARS
     examples:
-        + id:Strig; = public String id;,
-        + qty:Double; = public Double qty;,
+        + id:Strig; = public String id;
+        + qty:Double; = public Double qty;
         + age:int; = public String id;
     """
     attribs = ""
