@@ -588,6 +588,10 @@ def createJavaFILE_ENTITY(e_name, e_vars):
 
 def createJavaFILE_API(e_name, useCaseFolderName, useCaseClassName, useCaseVarName, useCaseParamClassName):
     """
+    Enter:
+        entity name, name of usecase folder name, name of contract use case & param.
+    Creates:
+        API.java
     """
     _APIClassName = f"get{e_name}ApiRest"
     API = _template_api[:]
@@ -597,7 +601,6 @@ def createJavaFILE_API(e_name, useCaseFolderName, useCaseClassName, useCaseVarNa
     API = API.replace('<usecase>', useCaseVarName)
     API = API.replace('<USECASEPARAM>', useCaseParamClassName)
     
-
     #SAVE API
     with open(f"output/{e_name}/{_APIClassName}.java", "w", encoding="UTF-8") as f:
         f.write(API)
