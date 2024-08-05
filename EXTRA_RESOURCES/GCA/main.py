@@ -661,6 +661,25 @@ def createJavaFILE_USECASE_IMPLEMENTATION(e_name, useCaseImplClassName, useCaseF
         saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {useCaseImplClassName}.java FILE")
 
 
+def createJavaFILE_DAO_REPOSITORY(e_name, e_vars, repositoryClassName):
+    """
+    Enter:
+        name of entity and name of repository class
+    Creates:
+        entityRespository.java
+    """
+    DAO_REPOSITORY = _template_dao_repository[:]
+    DAO_REPOSITORY = DAO_REPOSITORY.replace('<ENTITY>', e_name)
+    _typeID = getIDTypeToJava(e_vars)
+    DAO_REPOSITORY = DAO_REPOSITORY.replace('<ID-TYPE>', _typeID)
+
+
+    #SAVE DAO Repository
+    with open(f"output/{i}/{i}DAO/{repositoryClassName}.java", "w", encoding="UTF-8") as f:
+        f.write(DAO_REPOSITORY)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {repositoryClassName}.java FILE")
+
+
 #SAVE FILES
 for i in _DATA:
     createFolderEntity(i)
@@ -688,22 +707,13 @@ for i in _DATA:
     createJavaFILE_USECASE_PARAM(_entity, _useCaseFolderName, _useCaseParamName)
     createJavaFILE_USECASE_CONTRACT(_entity, _useCaseContractName, _useCaseFolderName)
     createJavaFILE_USECASE_IMPLEMENTATION(_entity, _useCaseImplClassName, _useCaseFolderName, _useCaseServiceName, _useCaseServiceVarName)
-
+    createJavaFILE_DAO_REPOSITORY(_entity, _vars, _daoRepositoryClassName)
 
     # ... Refactoring
 
 
 
-    DAO_REPOSITORY = _template_dao_repository[:]
-    DAO_REPOSITORY = DAO_REPOSITORY.replace('<ENTITY>', i)
-    _typeID = getIDTypeToJava(_vars)
-    DAO_REPOSITORY = DAO_REPOSITORY.replace('<ID-TYPE>', _typeID)
 
-
-    #SAVE DAO Repository
-    with open(f"output/{i}/{i}DAO/{_daoRepositoryClassName}.java", "w", encoding="UTF-8") as f:
-        f.write(DAO_REPOSITORY)
-        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_daoRepositoryClassName}.java FILE")
 
 
     DAO_SERVICE = _template_dao_service[:]
