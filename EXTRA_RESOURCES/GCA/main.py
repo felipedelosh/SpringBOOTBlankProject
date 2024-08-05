@@ -641,6 +641,26 @@ def createJavaFILE_USECASE_CONTRACT(e_name, useCaseContractClassName, useCaseFol
         saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {useCaseContractClassName}.java FILE")
 
 
+def createJavaFILE_USECASE_IMPLEMENTATION(e_name, useCaseImplClassName, useCaseFolderName, serviceClassName, serviceVarName):
+    """
+    Enter:
+        name of entity, name of contract class and the name of use case folder
+    Creates:
+        useCaseContract.java File
+    """
+    USE_CASE = _template_use_case_implementation[:]
+    USE_CASE = USE_CASE.replace('<ENTITY>', e_name)
+    USE_CASE = USE_CASE.replace('<USECASEFOLDER>', useCaseFolderName)
+    USE_CASE = USE_CASE.replace('<SERVICE>', serviceClassName)
+    USE_CASE = USE_CASE.replace('<service>', serviceVarName)
+
+
+    #SAVE USE CASE IMPL
+    with open(f"output/{e_name}/getAll{e_name}UseCase/{useCaseImplClassName}.java", "w", encoding="UTF-8") as f:
+        f.write(USE_CASE)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {useCaseImplClassName}.java FILE")
+
+
 #SAVE FILES
 for i in _DATA:
     createFolderEntity(i)
@@ -667,22 +687,10 @@ for i in _DATA:
     createJavaFILE_API(_entity, _useCaseFolderName, _useCaseName, _useCaseVarName, _useCaseParamName)
     createJavaFILE_USECASE_PARAM(_entity, _useCaseFolderName, _useCaseParamName)
     createJavaFILE_USECASE_CONTRACT(_entity, _useCaseContractName, _useCaseFolderName)
+    createJavaFILE_USECASE_IMPLEMENTATION(_entity, _useCaseImplClassName, _useCaseFolderName, _useCaseServiceName, _useCaseServiceVarName)
 
-    
+
     # ... Refactoring
-
-
-    USE_CASE = _template_use_case_implementation[:]
-    USE_CASE = USE_CASE.replace('<ENTITY>', i)
-    USE_CASE = USE_CASE.replace('<USECASEFOLDER>', _useCaseFolderName)
-    USE_CASE = USE_CASE.replace('<SERVICE>', _useCaseServiceName)
-    USE_CASE = USE_CASE.replace('<service>', _useCaseServiceVarName)
-
-
-    #SAVE USE CASE IMPL
-    with open(f"output/{i}/getAll{i}UseCase/{_useCaseImplClassName}.java", "w", encoding="UTF-8") as f:
-        f.write(USE_CASE)
-        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_useCaseImplClassName}.java FILE")
 
 
 
