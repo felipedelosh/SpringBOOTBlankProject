@@ -607,6 +607,23 @@ def createJavaFILE_API(e_name, useCaseFolderName, useCaseClassName, useCaseVarNa
         saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_APIClassName}.java FILE")
 
 
+def createJavaFILE_USECASE_PARAM(e_name, useCaseFolderName, useCaseParamClassName):
+    """
+    Enter:
+        name of entity, the name of use case & name of use case PARAM NAME
+    Creates:
+        useCaseParam.java File
+    """
+    USE_CASE_PARAM = _template_use_case_param[:]
+    USE_CASE_PARAM = USE_CASE_PARAM.replace('<ENTITY>', e_name)
+    USE_CASE_PARAM = USE_CASE_PARAM.replace('<USECASEFOLDER>', useCaseFolderName)
+
+    #SAVE USE CASE PARAM
+    with open(f"output/{e_name}/getAll{e_name}UseCase/{useCaseParamClassName}.java", "w", encoding="UTF-8") as f:
+        f.write(USE_CASE_PARAM)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {useCaseParamClassName}.java FILE")
+
+
 #SAVE FILES
 for i in _DATA:
     createFolderEntity(i)
@@ -631,18 +648,12 @@ for i in _DATA:
     # TEMPLATES.JAVA
     createJavaFILE_ENTITY(_entity, _vars)
     createJavaFILE_API(_entity, _useCaseFolderName, _useCaseName, _useCaseVarName, _useCaseParamName)
+    createJavaFILE_USECASE_PARAM(_entity, _useCaseFolderName, _useCaseParamName)
 
 
+    # ... Refactoring
 
 
-    USE_CASE_PARAM = _template_use_case_param[:]
-    USE_CASE_PARAM = USE_CASE_PARAM.replace('<ENTITY>', i)
-    USE_CASE_PARAM = USE_CASE_PARAM.replace('<USECASEFOLDER>', _useCaseFolderName)
-
-    #SAVE USE CASE PARAM
-    with open(f"output/{i}/getAll{i}UseCase/{_useCaseParamName}.java", "w", encoding="UTF-8") as f:
-        f.write(USE_CASE_PARAM)
-        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_useCaseParamName}.java FILE")
 
 
     USE_CASE_CONTRACT = _template_use_case_contract[:]
