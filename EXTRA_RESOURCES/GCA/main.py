@@ -680,6 +680,26 @@ def createJavaFILE_DAO_REPOSITORY(e_name, e_vars, repositoryClassName):
         saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {repositoryClassName}.java FILE")
 
 
+def createJavaFILE_DAO_SERVICE(e_name, serviceClassName, repositoryClassName):
+    """
+    Enter:
+        name of entity and name of repository class
+    Creates:
+        entityRespository.java
+    """
+    DAO_SERVICE = _template_dao_service[:]
+    DAO_SERVICE = DAO_SERVICE.replace('<ENTITY>', e_name)
+    DAO_SERVICE = DAO_SERVICE.replace('<REPOSITORY>', repositoryClassName)
+    _daoRepositoryVarName = repositoryClassName.lower()
+    DAO_SERVICE = DAO_SERVICE.replace('<repository>', _daoRepositoryVarName)
+
+
+    #SAVE DAO Service
+    with open(f"output/{i}/{i}DAO/{serviceClassName}.java", "w", encoding="UTF-8") as f:
+        f.write(DAO_SERVICE)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {serviceClassName}.java FILE")
+
+
 #SAVE FILES
 for i in _DATA:
     createFolderEntity(i)
@@ -708,25 +728,11 @@ for i in _DATA:
     createJavaFILE_USECASE_CONTRACT(_entity, _useCaseContractName, _useCaseFolderName)
     createJavaFILE_USECASE_IMPLEMENTATION(_entity, _useCaseImplClassName, _useCaseFolderName, _useCaseServiceName, _useCaseServiceVarName)
     createJavaFILE_DAO_REPOSITORY(_entity, _vars, _daoRepositoryClassName)
+    createJavaFILE_DAO_SERVICE(_entity, _daoServiceClassName, _daoRepositoryClassName)
 
     # ... Refactoring
 
 
-
-
-
-
-    DAO_SERVICE = _template_dao_service[:]
-    DAO_SERVICE = DAO_SERVICE.replace('<ENTITY>', i)
-    DAO_SERVICE = DAO_SERVICE.replace('<REPOSITORY>', _daoRepositoryClassName)
-    _daoRepositoryVarName = _daoRepositoryClassName.lower()
-    DAO_SERVICE = DAO_SERVICE.replace('<repository>', _daoRepositoryVarName)
-
-
-    #SAVE DAO Service
-    with open(f"output/{i}/{i}DAO/{_daoServiceClassName}.java", "w", encoding="UTF-8") as f:
-        f.write(DAO_SERVICE)
-        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_daoServiceClassName}.java FILE")
 
 
     DAO_ENTITY = _template_dao_entiry[:]
