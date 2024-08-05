@@ -700,6 +700,23 @@ def createJavaFILE_DAO_SERVICE(e_name, serviceClassName, repositoryClassName):
         saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {serviceClassName}.java FILE")
 
 
+def createJavaFILE_DAO_ENTITY(DAO_class_name, e_name, DAO_e_vars):
+    """
+    Enter:
+        name of DAO class, name of entity and all vars of DAO entity.
+    Creates:
+        entityDAO.java
+    """
+    DAO_ENTITY = _template_dao_entiry[:]
+    DAO_ENTITY = DAO_ENTITY.replace('<ENTITY>', e_name)
+    DAO_ENTITY = DAO_ENTITY.replace('<VARS>', DAO_e_vars)
+
+    #SAVE DAO Entity
+    with open(f"output/{e_name}/{e_name}DAO/{DAO_class_name}.java", "w", encoding="UTF-8") as f:
+        f.write(DAO_ENTITY)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {DAO_class_name}.java FILE")
+
+
 #SAVE FILES
 for i in _DATA:
     createFolderEntity(i)
@@ -720,6 +737,7 @@ for i in _DATA:
     _daoEntityClassName = f"{i}Entity"
     _mapperClassName = f"{i}Mapper"
     _vars = getAllAttribsToJava(_DATA[i])
+    _varsEntity = getAllAttribsToJPA(_DATA[i])
 
     # TEMPLATES.JAVA
     createJavaFILE_ENTITY(_entity, _vars)
@@ -729,21 +747,10 @@ for i in _DATA:
     createJavaFILE_USECASE_IMPLEMENTATION(_entity, _useCaseImplClassName, _useCaseFolderName, _useCaseServiceName, _useCaseServiceVarName)
     createJavaFILE_DAO_REPOSITORY(_entity, _vars, _daoRepositoryClassName)
     createJavaFILE_DAO_SERVICE(_entity, _daoServiceClassName, _daoRepositoryClassName)
+    createJavaFILE_DAO_ENTITY(_daoEntityClassName, _entity, _varsEntity)
 
     # ... Refactoring
 
-
-
-
-    DAO_ENTITY = _template_dao_entiry[:]
-    DAO_ENTITY = DAO_ENTITY.replace('<ENTITY>', i)
-    _varsEntity = getAllAttribsToJPA(_DATA[i])
-    DAO_ENTITY = DAO_ENTITY.replace('<VARS>', _varsEntity)
-
-    #SAVE DAO Entity
-    with open(f"output/{i}/{i}DAO/{_daoEntityClassName}.java", "w", encoding="UTF-8") as f:
-        f.write(DAO_ENTITY)
-        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_daoEntityClassName}.java FILE")
 
 
     MAPPER_ENTITY = _template_mapper_entiry[:]
