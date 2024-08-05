@@ -562,6 +562,29 @@ def createFolderEntityDAO(entity):
         saveLOG("FOLDER-NOT-CREATE:ERROR", getDateYYYYMMDD(), getHourHHMM(), f"ERROR TO CREATE A FOLDER DAO{entity}")
 
 
+def createJavaFILE_ENTITY(e_name, e_vars):
+    """
+    Enter a name of entity and its vars.
+    creates Entity.java File
+    """
+    ENTITY = _template_entity[:]
+    ENTITY = ENTITY.replace('<ENTITY>', e_name)
+    ENTITY = ENTITY.replace('<VARS>', e_vars)
+    _emptyConstruct = f"\tpublic {e_name}(){{\n\t}}"
+    ENTITY = ENTITY.replace('<EMPTY-CONSTRUCT>', _emptyConstruct)
+    _FullConstruct =  getJavaConstructorWithVars(e_vars)
+    ENTITY = ENTITY.replace('<FULL-CONSTRUCT>', _FullConstruct)
+    _setters_getters = getJavaSetterAndGetters(e_vars)
+    ENTITY = ENTITY.replace('<SETTERS-GETTERS>', _setters_getters)
+    _to_string = getJavaToString(e_vars)
+    ENTITY = ENTITY.replace('<TO-STRING>', _to_string)
+
+    #SAVE ENTITY
+    with open(f"output/{e_name}/{e_name}.java", "w", encoding="UTF-8") as f:
+        f.write(ENTITY)
+        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {e_name}.java FILE")
+
+
 #SAVE FILES
 for i in _DATA:
     createFolderEntity(i)
@@ -582,25 +605,10 @@ for i in _DATA:
     _daoServiceClassName = f"{i}Service"
     _daoEntityClassName = f"{i}Entity"
     _mapperClassName = f"{i}Mapper"
+    _vars = getAllAttribsToJava(_DATA[i])
 
     # TEMPLATES.JAVA
-    ENTITY = _template_entity[:]
-    ENTITY = ENTITY.replace('<ENTITY>', _entity)
-    _vars = getAllAttribsToJava(_DATA[i])
-    ENTITY = ENTITY.replace('<VARS>', _vars)
-    _emptyConstruct = f"\tpublic {_entity}(){{\n\t}}"
-    ENTITY = ENTITY.replace('<EMPTY-CONSTRUCT>', _emptyConstruct)
-    _FullConstruct =  getJavaConstructorWithVars(_vars)
-    ENTITY = ENTITY.replace('<FULL-CONSTRUCT>', _FullConstruct)
-    _setters_getters = getJavaSetterAndGetters(_vars)
-    ENTITY = ENTITY.replace('<SETTERS-GETTERS>', _setters_getters)
-    _to_string = getJavaToString(_vars)
-    ENTITY = ENTITY.replace('<TO-STRING>', _to_string)
-
-    #SAVE ENTITY
-    with open(f"output/{i}/{_entity}.java", "w", encoding="UTF-8") as f:
-        f.write(ENTITY)
-        saveLOG("SAVE:FILE", getDateYYYYMMDD(), getHourHHMM(), f"SAVE A {_entity}.java FILE")
+    createJavaFILE_ENTITY(_entity, _vars)
 
 
     API = _template_api[:]
