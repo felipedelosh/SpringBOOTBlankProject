@@ -16,5 +16,11 @@ public class ExampleService {
         var x = examplerepository.findAll();
         return x;
     }
+
+    public ExampleEntity findById(String id){
+        //Find by id it´s proporcionated by JPA not need creates in repository
+        var x = examplerepository.findById(id).orElse(null);
+        return x;
+    }
     
 }
