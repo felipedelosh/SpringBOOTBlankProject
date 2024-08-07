@@ -16,8 +16,8 @@ This project it´s create like a tool to undertang a concepts:
 
 - `Function 1`: All API responses BE simulated JSON and hav 3 sectios: status, data and code.<br>
 - `Function 2`: Generate al java code with Python GCA (AUTOMATIC-CODE:GENERATE)<br>
-- `Function 3`: Generate API endPoints example: http://localhost:8080/getAllExample<br>
-- `Function 4`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
+- `Function 3`: API endPoints example: http://localhost:8080/getAllExample<br>
+- `Function 3`: API endPoints get example by ID: http://localhost:8080/getExampleById/THE-ID<br>
 - `Function 5`: Neque porro quisquam est qui dolorem ipsum quia dolor sit amet.<br>
 
 
