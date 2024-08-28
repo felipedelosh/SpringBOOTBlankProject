@@ -22,5 +22,9 @@ public class ExampleService {
         var x = examplerepository.findById(id).orElse(null);
         return x;
     }
+
+    public void deleteById(String id) {
+        examplerepository.deleteById(id);
+    }
     
 }
